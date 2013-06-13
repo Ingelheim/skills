@@ -1,0 +1,20 @@
+<div class="container">
+  <h1>Your Skills and Levels</h1>
+
+  <table border="1">
+<tr>
+<th>Skill</th>
+<th>Year</th>
+<th>Formal</th>
+</tr>
+
+
+<tr>
+<td><%= @user.skills.first.name%></td>
+<td><%= @user.skills.first.proficiencies.first.years%></td>
+<td><%= @user.skills.first.proficiencies.first.formal%></td>
+</tr>
+</table>
+
+  <%# TODO: display the skills and proficiency levels for each user ... %>
+</div>

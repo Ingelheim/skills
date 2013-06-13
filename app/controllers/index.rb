@@ -20,7 +20,7 @@ post '/sessions' do
   if user
     # successfully authenticated; set up session and redirect
     session[:user_id] = user.id
-    redirect '/'
+    redirect '/user'
   else
     # an error occurred, re-render the sign-in form, displaying an error
     @error = "Invalid email or password."
@@ -35,7 +35,6 @@ delete '/sessions/:id' do
   200
 end
 
-
 #----------- USERS -----------
 
 get '/users/new' do
@@ -47,12 +46,23 @@ end
 post '/users' do
   # sign-up
   @user = User.new params[:user]
+ 
   if @user.save
     # successfully created new account; set up the session and redirect
+     skill = Skill.create(name: params[:skill], context: params[:context])
+     proficiency = Proficiency.create(user_id: @user.id, skill_id: skill.id, years: params[:years], formal: params[:formal])
     session[:user_id] = @user.id
-    redirect '/'
   else
     # an error occurred, re-render the sign-up form, displaying errors
     erb :sign_up
   end
+  erb :user
 end
+
+
+
+get '/user' do
+  @user = current_user
+erb :user
+end  
+
